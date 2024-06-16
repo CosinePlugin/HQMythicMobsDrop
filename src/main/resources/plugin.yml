@@ -1,0 +1,8 @@
+name: HQMythicMobsDrop
+main: kr.cosine.mythicmobsdrop.HQMythicMobsDrop
+version: 1.0.0
+api-version: 1.17
+author: Cosine_A
+depend:
+  - HQFramework
+  - MythicMobs
