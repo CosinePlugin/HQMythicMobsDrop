@@ -7,6 +7,9 @@ MythicMobs에 필수적/확률적 드랍 아이템을 추가할 수 있는 시�
 ## 디스코드
 * 모든 문의, 질문, 개발 요청은 [디스코드](https://discord.gg/hUkaca9ZQu)에서 해주시길 바랍니다.
 
+## 필수 플러그인
+*  [HQFramework](https://github.com/HQService/HQFramework)
+
 ## 버전
 * 1.17.1~1.20.4
 
