@@ -3,7 +3,6 @@ package kr.cosine.mythicmobsdrop.config.component.handler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
-import kr.cosine.mythicmobsdrop.config.DropConfig
 import kr.cosine.mythicmobsdrop.config.component.DropConfigComponent
 import kr.cosine.mythicmobsdrop.factory.drop.handler.DropFactoryComponentHandler
 import kr.cosine.mythicmobsdrop.factory.item.handler.BaseItemStackFactoryComponentHandler
