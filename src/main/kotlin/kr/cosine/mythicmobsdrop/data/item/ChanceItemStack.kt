@@ -20,10 +20,10 @@ class ChanceItemStack(
         }
     }
 
-    override fun getItemStack(): ItemStack = itemStack.clone()
+    override fun toItemStack(): ItemStack = itemStack.clone()
 
-    override fun getOriginalItemStack(): ItemStack {
-        return itemStack.nms {
+    override fun toOriginalItemStack(): ItemStack {
+        return toItemStack().nms {
             tag {
                 remove(CHANCE_KEY)
             }

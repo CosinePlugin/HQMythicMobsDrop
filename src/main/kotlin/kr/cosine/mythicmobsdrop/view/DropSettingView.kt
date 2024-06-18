@@ -4,6 +4,7 @@ import kr.cosine.mythicmobsdrop.data.drop.Drop
 import kr.cosine.mythicmobsdrop.data.item.BaseItemStack
 import kr.cosine.mythicmobsdrop.data.item.ChanceItemStack
 import kr.cosine.mythicmobsdrop.extension.playButtonSound
+import kr.cosine.mythicmobsdrop.registry.DropHolderRegistry.Companion.isChanged
 import kr.cosine.mythicmobsdrop.view.model.DropSettingViewModel
 import kr.cosine.mythicmobsdrop.view.util.LoreUtil
 import kr.hqservice.framework.bukkit.core.extension.editMeta
@@ -11,7 +12,6 @@ import kr.hqservice.framework.inventory.container.HQContainer
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
 import org.bukkit.event.inventory.InventoryClickEvent
-import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.inventory.Inventory
 
 class DropSettingView(
@@ -25,15 +25,13 @@ class DropSettingView(
     private val baseItemStacks get() = drop.baseItemStacks
     private var currentBaseItemStacks = emptyList<BaseItemStack>()
 
-    private var isChanged = false
-
     override fun initialize(inventory: Inventory) {
         inventory.clear()
         currentBaseItemStacks = baseItemStacks.drop(ITEM_SIZE * page).take(ITEM_SIZE)
         itemSlots.forEach { index ->
             if (index >= currentBaseItemStacks.size) return
             val baseItemStack = currentBaseItemStacks[index]
-            val itemStack = baseItemStack.getItemStack().editMeta {
+            val itemStack = baseItemStack.toItemStack().editMeta {
                 lore = LoreUtil.getLore(baseItemStack)
             }
             inventory.setItem(index, itemStack)
@@ -110,16 +108,10 @@ class DropSettingView(
         if (event.click != ClickType.LEFT) return
         val itemStack = event.currentItem?.clone() ?: return
         player.playButtonSound()
-        val baseItemStack = drop.getBaseItemStack(itemStack)
+        val baseItemStack = drop.toBaseItemStack(itemStack)
         drop.addBaseItemStack(baseItemStack)
         isChanged = true
         refresh()
-    }
-
-    override fun onClose(event: InventoryCloseEvent) {
-        if (isChanged) {
-            dropSettingViewModel.save()
-        }
     }
 
     private companion object {

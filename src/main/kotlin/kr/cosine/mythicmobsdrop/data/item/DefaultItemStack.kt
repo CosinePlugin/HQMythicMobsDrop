@@ -6,7 +6,7 @@ class DefaultItemStack(
     private val itemStack: ItemStack
 ) : BaseItemStack {
 
-    override fun getItemStack(): ItemStack = itemStack.clone()
+    override fun toItemStack(): ItemStack = itemStack.clone()
 
-    override fun getOriginalItemStack(): ItemStack = getItemStack()
+    override fun toOriginalItemStack(): ItemStack = toItemStack()
 }

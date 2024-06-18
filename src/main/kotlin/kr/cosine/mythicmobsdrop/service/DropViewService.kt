@@ -1,7 +1,7 @@
 package kr.cosine.mythicmobsdrop.service
 
-import kr.cosine.mythicmobsdrop.data.drop.Chance
-import kr.cosine.mythicmobsdrop.data.drop.Default
+import kr.cosine.mythicmobsdrop.data.drop.impl.ChanceDrop
+import kr.cosine.mythicmobsdrop.data.drop.impl.DefaultDrop
 import kr.cosine.mythicmobsdrop.data.drop.Drop
 import kr.cosine.mythicmobsdrop.data.drop.holder.DropHolder
 import kr.cosine.mythicmobsdrop.view.DropSettingView
@@ -16,11 +16,11 @@ class DropViewService(
 ) {
 
     fun openDefaultDropSettingView(dropHolder: DropHolder, player: Player) {
-        openDropSettingView(dropHolder, Default::class, player)
+        openDropSettingView(dropHolder, DefaultDrop::class, player)
     }
 
     fun openChanceDropSettingView(dropHolder: DropHolder, player: Player) {
-        openDropSettingView(dropHolder, Chance::class, player)
+        openDropSettingView(dropHolder, ChanceDrop::class, player)
     }
 
     private fun <T : Drop> openDropSettingView(dropHolder: DropHolder, clazz: KClass<T>, player: Player) {

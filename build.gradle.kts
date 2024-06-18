@@ -23,6 +23,7 @@ dependencies {
     compileOnly("kr.hqservice", "hqframework-bukkit-nms", "1.0.1-SNAPSHOT") { exclude("org.spigotmc") }
 
     testImplementation(kotlin("test"))
+    testImplementation(kotlin("reflect"))
 }
 
 tasks {

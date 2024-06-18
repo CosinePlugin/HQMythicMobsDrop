@@ -10,8 +10,10 @@ class DropHolder(
 ) {
 
     fun <T : Drop> getDrop(clazz: KClass<T>): T {
-        return (drops.filterIsInstance(clazz.java).firstOrNull() ?: clazz.createInstance()).apply {
+        return drops.filterIsInstance(clazz.java).firstOrNull() ?: clazz.createInstance().apply {
             drops.add(this)
         }
     }
+
+    fun getDrops(): List<Drop> = drops
 }

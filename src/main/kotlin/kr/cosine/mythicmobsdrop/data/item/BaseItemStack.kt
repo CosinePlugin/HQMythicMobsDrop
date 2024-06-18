@@ -4,7 +4,7 @@ import org.bukkit.inventory.ItemStack
 
 sealed interface BaseItemStack {
 
-    fun getItemStack(): ItemStack
+    fun toItemStack(): ItemStack
 
-    fun getOriginalItemStack(): ItemStack
+    fun toOriginalItemStack(): ItemStack
 }

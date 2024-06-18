@@ -3,15 +3,16 @@ package kr.cosine.mythicmobsdrop.data.drop
 import kr.cosine.mythicmobsdrop.data.item.BaseItemStack
 import org.bukkit.inventory.ItemStack
 
-sealed interface Drop {
-
+abstract class Drop(
+    val key: String,
     val title: String
+) {
 
-    val baseItemStacks: List<BaseItemStack>
+    abstract val baseItemStacks: List<BaseItemStack>
 
-    fun getBaseItemStack(itemStack: ItemStack): BaseItemStack
+    abstract fun toBaseItemStack(itemStack: ItemStack): BaseItemStack
 
-    fun addBaseItemStack(baseItemStack: BaseItemStack)
+    abstract fun addBaseItemStack(baseItemStack: BaseItemStack)
 
-    fun removeBaseItemStack(baseItemStack: BaseItemStack)
+    abstract fun removeBaseItemStack(baseItemStack: BaseItemStack)
 }

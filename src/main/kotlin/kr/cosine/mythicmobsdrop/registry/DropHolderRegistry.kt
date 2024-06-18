@@ -8,6 +8,8 @@ class DropHolderRegistry {
 
     private val dropHolderMap = mutableMapOf<String, DropHolder>()
 
+    fun findDropHolder(key: String): DropHolder? = dropHolderMap[key]
+
     fun getDropHolder(key: String): DropHolder {
         return dropHolderMap.computeIfAbsent(key) {
             DropHolder(key)
@@ -16,5 +18,11 @@ class DropHolderRegistry {
 
     fun setDropHolder(key: String, dropHolder: DropHolder) {
         dropHolderMap[key] = dropHolder
+    }
+
+    fun getDropHolderMap(): Map<String, DropHolder> = dropHolderMap
+
+    companion object {
+        var isChanged = false
     }
 }
