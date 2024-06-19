@@ -1,14 +1,17 @@
-package kr.cosine.mythicmobsdrop.view
+package kr.cosine.mythicmobsdrop.view.impl
 
 import kr.cosine.mythicmobsdrop.data.drop.Drop
 import kr.cosine.mythicmobsdrop.data.item.BaseItemStack
 import kr.cosine.mythicmobsdrop.data.item.ChanceItemStack
 import kr.cosine.mythicmobsdrop.extension.playButtonSound
 import kr.cosine.mythicmobsdrop.registry.DropHolderRegistry.Companion.isChanged
+import kr.cosine.mythicmobsdrop.view.ChanceDropSettingView
+import kr.cosine.mythicmobsdrop.view.PageView
+import kr.cosine.mythicmobsdrop.view.data.Slot
 import kr.cosine.mythicmobsdrop.view.model.DropSettingViewModel
+import kr.cosine.mythicmobsdrop.view.util.ButtonUtil
 import kr.cosine.mythicmobsdrop.view.util.LoreUtil
 import kr.hqservice.framework.bukkit.core.extension.editMeta
-import kr.hqservice.framework.inventory.container.HQContainer
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
 import org.bukkit.event.inventory.InventoryClickEvent
@@ -18,17 +21,18 @@ class DropSettingView(
     private val dropSettingViewModel: DropSettingViewModel,
     key: String,
     private val drop: Drop
-) : HQContainer(54, "$key ▸ ${drop.title}") {
+) : PageView("$key ▸ ${drop.title}") {
 
-    private var page = 0
+    override var page = 0
 
-    private val baseItemStacks get() = drop.baseItemStacks
+    override val baseItemStacks get() = drop.baseItemStacks
     private var currentBaseItemStacks = emptyList<BaseItemStack>()
 
     override fun initialize(inventory: Inventory) {
         inventory.clear()
-        currentBaseItemStacks = baseItemStacks.drop(ITEM_SIZE * page).take(ITEM_SIZE)
-        itemSlots.forEach { index ->
+        currentBaseItemStacks = baseItemStacks.drop(Slot.ITEM_SIZE * page).take(Slot.ITEM_SIZE)
+        registerButton()
+        Slot.itemSlots.forEach { index ->
             if (index >= currentBaseItemStacks.size) return
             val baseItemStack = currentBaseItemStacks[index]
             val itemStack = baseItemStack.toItemStack().editMeta {
@@ -38,11 +42,17 @@ class DropSettingView(
         }
     }
 
+    private fun registerButton() {
+        ButtonUtil.getBeforePageButton().setSlot(this, Slot.BEFORE_PAGE_SLOT)
+        ButtonUtil.getNextPageButton().setSlot(this, Slot.NEXT_PAGE_SLOT)
+        ButtonUtil.getBackgroundButton().setSlot(this, Slot.backgroundSlots)
+    }
+
     override fun onClick(event: InventoryClickEvent) {
         if (event.clickedInventory == null) return
         val player = event.whoClicked as Player
         val slot = event.rawSlot
-        if (slot <= MAX_SLOT) {
+        if (slot <= Slot.MAX_SLOT) {
             clickTopInventory(event, player)
         } else {
             clickBottomInventory(event, player)
@@ -56,28 +66,15 @@ class DropSettingView(
         val click = event.click
         when (click) {
             ClickType.SHIFT_RIGHT -> {
-                when (slot) {
-                    BEFORE_PAGE_SLOT -> {
-                        player.playButtonSound()
-                        if (page == 0) return
+                if (slot in Slot.itemSlots) {
+                    val baseItemStack = event.clickedBaseItemStack ?: return
+                    player.playButtonSound()
+                    drop.removeBaseItemStack(baseItemStack)
+                    isChanged = true
+                    if (page > 0 && baseItemStacks.size == Slot.ITEM_SIZE) {
                         page--
-                        refresh()
                     }
-
-                    NEXT_PAGE_SLOT -> {
-                        player.playButtonSound()
-                        if (baseItemStacks.size <= (page + 1) * ITEM_SIZE) return
-                        page++
-                        refresh()
-                    }
-
-                    in itemSlots -> {
-                        val baseItemStack = event.clickedBaseItemStack ?: return
-                        player.playButtonSound()
-                        drop.removeBaseItemStack(baseItemStack)
-                        isChanged = true
-                        refresh()
-                    }
+                    refresh()
                 }
             }
 
@@ -111,16 +108,9 @@ class DropSettingView(
         val baseItemStack = drop.toBaseItemStack(itemStack)
         drop.addBaseItemStack(baseItemStack)
         isChanged = true
+        if (currentBaseItemStacks.size == Slot.ITEM_SIZE) {
+            page++
+        }
         refresh()
-    }
-
-    private companion object {
-        const val ITEM_SIZE = 45
-        val itemSlots = 0 until ITEM_SIZE
-
-        const val BEFORE_PAGE_SLOT = 45
-        const val NEXT_PAGE_SLOT = 53
-
-        const val MAX_SLOT = 53
     }
 }

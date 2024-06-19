@@ -4,7 +4,7 @@ import kr.cosine.mythicmobsdrop.data.drop.Drop
 import kr.cosine.mythicmobsdrop.data.drop.holder.DropHolder
 import kr.cosine.mythicmobsdrop.data.drop.impl.ChanceDrop
 import kr.cosine.mythicmobsdrop.data.drop.impl.DefaultDrop
-import kr.cosine.mythicmobsdrop.view.DropSettingView
+import kr.cosine.mythicmobsdrop.view.impl.DropSettingView
 import kr.cosine.mythicmobsdrop.view.model.DropSettingViewModel
 import kr.hqservice.framework.global.core.component.Service
 import org.bukkit.entity.Player
