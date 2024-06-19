@@ -8,7 +8,7 @@ import org.bukkit.inventory.ItemStack
 
 data class ChanceDrop(
     override val baseItemStacks: MutableList<ChanceItemStack> = mutableListOf()
-) : Drop(DropKey.CHANCE, "확률 설정") {
+) : Drop(DropKey.CHANCE, "Probability settings") {
 
     override fun toBaseItemStack(itemStack: ItemStack): BaseItemStack = ChanceItemStack.of(itemStack)
 

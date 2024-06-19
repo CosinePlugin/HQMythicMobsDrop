@@ -13,6 +13,6 @@ class DropFactoryRegistry {
     }
 
     fun getDropFactory(key: String): DropFactory {
-        return dropFactoryMap[key] ?: throw UnsupportedOperationException("${key}에 대한 DropFactory 생성을 지원하지 않습니다.")
+        return dropFactoryMap[key] ?: throw UnsupportedOperationException("There is no support for creating DropFactory for $key.")
     }
 }

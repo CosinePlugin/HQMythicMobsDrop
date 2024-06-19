@@ -10,12 +10,12 @@ import org.bukkit.Material
 
 object ButtonUtil {
 
-    private const val BEFORE_PAGE_BUTTON_TITLE = "§c이전 페이지로 이동"
-    private const val NEXT_PAGE_BUTTON_TITLE = "§a다음 페이지로 이동"
+    private const val BEFORE_PAGE_BUTTON_TITLE = "§cGo to previous page"
+    private const val NEXT_PAGE_BUTTON_TITLE = "§aGo to next page"
     private const val EMPTY = "§f"
 
-    private const val BEFORE_PAGE_NOT_EXIST_MESSAGE = "§c이전 페이지가 존재하지 않습니다."
-    private const val NEXT_PAGE_NOT_EXIST_MESSAGE = "§c다음 페이지가 존재하지 않습니다."
+    private const val BEFORE_PAGE_NOT_EXIST_MESSAGE = "§cThe previous page does not exist."
+    private const val NEXT_PAGE_NOT_EXIST_MESSAGE = "§cThe next page does not exist."
 
     fun getBeforePageButton(): HQButton {
         return HQButtonBuilder(Material.RED_STAINED_GLASS_PANE).apply {

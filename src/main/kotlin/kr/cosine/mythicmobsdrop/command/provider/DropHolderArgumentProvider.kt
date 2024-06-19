@@ -19,10 +19,10 @@ class DropHolderArgumentProvider(
 
     override suspend fun cast(context: CommandContext, argument: String?): DropHolder {
         if (argument == null) {
-            throw ArgumentFeedback.Message("§c설정할 몹을 입력해주세요.")
+            throw ArgumentFeedback.Message("§cPlease enter the mob you want to set.")
         }
         if (!mobNames.contains(argument)) {
-            throw ArgumentFeedback.Message("§c존재하지 않는 몹입니다.")
+            throw ArgumentFeedback.Message("§cThis mob does not exist.")
         }
         return dropHolderRegistry.getDropHolder(argument)
     }

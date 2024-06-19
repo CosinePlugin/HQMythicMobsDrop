@@ -8,7 +8,7 @@ import org.bukkit.inventory.ItemStack
 
 data class DefaultDrop(
     override val baseItemStacks: MutableList<DefaultItemStack> = mutableListOf()
-) : Drop(DropKey.DEFAULT, "기본 설정") {
+) : Drop(DropKey.DEFAULT, "Default settings") {
 
     override fun toBaseItemStack(itemStack: ItemStack): BaseItemStack = DefaultItemStack(itemStack)
 

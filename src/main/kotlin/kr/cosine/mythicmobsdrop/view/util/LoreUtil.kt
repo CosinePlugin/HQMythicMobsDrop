@@ -8,9 +8,9 @@ import kr.cosine.mythicmobsdrop.extension.format
 object LoreUtil {
 
     private val emptyLore = listOf("")
-    private val removeDescriptionLore = listOf("§c쉬프트+우클릭 §7▸ §f목록에서 삭제합니다.")
-    private const val CHANCE_LORE = "§e§l| §f확률: §e%s"
-    private val chanceDescriptionLore = listOf("§e좌클릭 §7▸ §f확률을 설정합니다.") + removeDescriptionLore
+    private val removeDescriptionLore = listOf("§cShift + RMB §7▸ §f Delete from the list.")
+    private const val CHANCE_LORE = "§e§l| §fProbability: §e%s"
+    private val chanceDescriptionLore = listOf("§eLMB §7▸ §fSet probability.") + removeDescriptionLore
 
     fun getLore(baseItemStack: BaseItemStack): List<String> {
         return emptyLore + when (baseItemStack) {

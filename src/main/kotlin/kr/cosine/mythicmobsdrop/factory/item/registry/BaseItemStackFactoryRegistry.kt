@@ -24,6 +24,6 @@ class BaseItemStackFactoryRegistry {
     @Suppress("unchecked_cast")
     fun <T : Drop> getBaseItemStackFactory(clazz: KClass<T>): BaseItemStackFactory<T> {
         return baseItemStackFactoryMap[clazz] as? BaseItemStackFactory<T>
-            ?: throw UnsupportedOperationException("${clazz.simpleName}에 대한 BaseItemStackFactory 생성을 지원하지 않습니다.")
+            ?: throw UnsupportedOperationException("There is no support for creating BaseItemStackFactory for ${clazz.simpleName}.")
     }
 }

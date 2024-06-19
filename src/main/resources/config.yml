@@ -1,2 +1,2 @@
-# 설정 자동 저장 주기 (초 단위)
+# Settings auto save period (in seconds)
 auto-save-period: 300

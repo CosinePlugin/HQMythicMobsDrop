@@ -11,9 +11,9 @@ import org.bukkit.inventory.ItemStack
 
 object ChanceDropSettingView {
 
-    private val title = TextComponent("확률 설정")
+    private val title = TextComponent("Probability settings")
     private val baseItemStack = ItemStack(Material.PAPER).editMeta { setDisplayName("§r") }
-    private val resultItemStack = ItemStack(Material.PAPER).editMeta { setDisplayName("§a설정하기") }
+    private val resultItemStack = ItemStack(Material.PAPER).editMeta { setDisplayName("§aSetting up") }
 
     fun open(
         player: Player,
@@ -28,15 +28,15 @@ object ChanceDropSettingView {
                 setResultItem(resultItemStack)
                 setConfirmHandler {
                     val chance = it.toDoubleOrNull() ?: run {
-                        player.sendMessage("§c숫자만 입력할 수 있습니다.")
+                        player.sendMessage("§cYou can only enter numbers.")
                         return@setConfirmHandler false
                     }
                     if (chance <= 0.0) {
-                        player.sendMessage("§c양수만 입력할 수 있습니다.")
+                        player.sendMessage("§cOnly positive numbers can be entered.")
                         return@setConfirmHandler false
                     }
                     chanceItemStack.setChance(chance)
-                    player.sendMessage("§a확률을 ${chance.format()}퍼센트로 설정하였습니다.")
+                    player.sendMessage("§aThe probability is set to ${chance.format()} percent.")
                     onSuccess()
                     onClose()
                     return@setConfirmHandler true
