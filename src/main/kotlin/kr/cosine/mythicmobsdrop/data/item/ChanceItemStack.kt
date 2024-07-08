@@ -9,13 +9,15 @@ class ChanceItemStack(
 ) : BaseItemStack {
 
     private val tag get() = itemStack.getNmsItemStack().getTag()
+    private var chance = tag.getDouble(CHANCE_KEY, 0.0)
 
-    fun getChance(): Double = tag.getDouble(CHANCE_KEY, 0.0)
+    fun getChance(): Double = chance
 
     fun setChance(chance: Double) {
         itemStack.nms {
             tag {
                 setDouble(CHANCE_KEY, chance)
+                this@ChanceItemStack.chance = chance
             }
         }
     }
@@ -33,11 +35,11 @@ class ChanceItemStack(
     companion object {
         private const val CHANCE_KEY = "HQMythicMobsDropChance"
 
-        fun of(itemStack: ItemStack): ChanceItemStack {
+        fun of(itemStack: ItemStack, chance: Double = 100.0): ChanceItemStack {
             return ChanceItemStack(
                 itemStack.nms {
                     tag {
-                        setDouble(CHANCE_KEY, 100.0)
+                        setDouble(CHANCE_KEY, chance)
                     }
                 }
             )
