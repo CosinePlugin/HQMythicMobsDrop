@@ -15,10 +15,14 @@ class ChanceItemStackFactory : BaseItemStackFactory<ChanceDrop> {
     private val random: Random = Random
 
     override fun getItemStacks(drop: ChanceDrop): List<ItemStack> {
-        val baseItemStacks = drop.baseItemStacks
-        val emptyBaseItemStackChance = 100 - baseItemStacks.sumOf { it.getChance() }
-        val emptyBaseItemStack = ChanceItemStack.of(ItemStack(Material.AIR), emptyBaseItemStackChance)
-        val itemStack = (baseItemStacks + emptyBaseItemStack).minByOrNull {
+        val baseItemStacks = drop.baseItemStacks.toMutableList()
+        val totalChance = baseItemStacks.sumOf { it.getChance() }
+        if (totalChance < 100) {
+            val emptyBaseItemStackChance = 100 - totalChance
+            val emptyBaseItemStack = ChanceItemStack.of(ItemStack(Material.AIR), emptyBaseItemStackChance)
+            baseItemStacks.add(emptyBaseItemStack)
+        }
+        val itemStack = baseItemStacks.minByOrNull {
             -ln(random.nextDouble()) / it.getChance()
         }?.toOriginalItemStack() ?: return emptyList()
         if (itemStack.type.isAir) return emptyList()
