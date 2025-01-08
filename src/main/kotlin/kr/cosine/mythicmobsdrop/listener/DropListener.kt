@@ -12,6 +12,6 @@ class DropListener(
 
     @Subscribe
     fun onMythicMobsDeath(event: MythicMobDeathEvent) {
-        dropService.drop(event.mob)
+        dropService.drop(event.killer, event.mob)
     }
 }

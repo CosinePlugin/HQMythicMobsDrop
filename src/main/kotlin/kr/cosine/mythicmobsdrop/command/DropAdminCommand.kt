@@ -3,6 +3,7 @@ package kr.cosine.mythicmobsdrop.command
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kr.cosine.mythicmobsdrop.config.DropConfig
+import kr.cosine.mythicmobsdrop.config.SettingConfig
 import kr.cosine.mythicmobsdrop.data.drop.holder.DropHolder
 import kr.cosine.mythicmobsdrop.data.drop.impl.ChanceDrop
 import kr.cosine.mythicmobsdrop.data.drop.impl.DefaultDrop
@@ -15,6 +16,7 @@ import org.bukkit.entity.Player
 
 @Command(label = "드랍관리", isOp = true)
 class DropAdminCommand(
+    private val settingConfig: SettingConfig,
     private val dropConfig: DropConfig,
     private val dropViewService: DropViewService
 ) {
@@ -65,5 +67,11 @@ class DropAdminCommand(
             dropConfig.save()
             sender.sendMessage("§a변경된 사항을 수동으로 저장하였습니다.")
         }
+    }
+
+    @CommandExecutor("리로드", "config.yml을 리로드합니다.", priority = 6)
+    fun reload(sender: CommandSender) {
+        settingConfig.reload()
+        sender.sendMessage("§aconfig.yml을 리로드하였습니다.")
     }
 }
